@@ -1,0 +1,49 @@
+@media(max-width: 640px) {
+    #container {
+        display: block;
+    }
+    .home-text {
+        line-height: 55px;
+        font-size: 45px;
+        font-weight: 900;
+        margin-top: 40px;
+        justify-content: center;
+        padding-left: 40px;
+        letter-spacing: 2px;
+    }
+    .by-part {
+        padding-left: 40px;
+    }
+    .donate-blood {
+        padding-left: 40px;
+    }
+    .signup {
+        margin-top: 40px;
+        margin-bottom: 40px;
+        padding-left: 100px;
+        font-weight: 500;
+        /* font-size: 18px; */
+    }
+    .signup .btn-signup {
+        text-decoration: none;
+        background-color: #cf3d3c;
+        color: #fff;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+    }
+    .btn-event-click-button {
+        text-decoration: none;
+        background-color: #cf3d3c;
+        color: #fff;
+        margin-left: 40px;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+    }
+    .btn-event-click-button:hover {
+        background-color: #cf3d3c;
+        opacity: 0.5;
+        color: #fff;
+    }
+}
