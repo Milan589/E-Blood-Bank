@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Backend\BankType;
 use App\Models\Backend\BloodBank;
 use App\Models\Backend\BloodDonation;
 use App\Models\Backend\BloodGroup;
 use App\Models\Backend\BloodPouch;
-use App\Models\Backend\Location;
 use App\Models\Backend\Order;
 use App\Models\Backend\OrderBloodPouchDetail;
 use App\Models\Donor;
@@ -36,13 +33,13 @@ class DonorController extends FrontendBaseController
         $this->gateway->setTestMode(true); //set it to 'false' when go live
     }
 
-    function registerForm()
+    public function registerForm()
     {
         $data['bloodGroups'] = BloodGroup::pluck('bg_name', 'id');
         return view($this->__LoadDataToView('frontend.donor.register'), compact('data'));
     }
 
-    function register(Request $request)
+    public function register(Request $request)
     {
         $request->validate(
             [
@@ -75,7 +72,7 @@ class DonorController extends FrontendBaseController
                     DB::rollBack();
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (\Exception$exception) {
             DB::rollBack();
             $request->session()->flash('error', 'Error: ' . $exception->getMessage());
             return redirect()->route('frontend.donor.register');
@@ -83,24 +80,24 @@ class DonorController extends FrontendBaseController
         return redirect()->route('frontend.donor.register');
     }
 
-    function login()
+    public function login()
     {
         return view('frontend.donor.login');
     }
-    function home()
+    public function home()
     {
         $data['record'] = BloodDonation::pluck('user_id', 'id')->count();
         return view($this->__LoadDataToView('frontend.donor.home'), compact('data'));
     }
 
-    function donate()
+    public function donate()
     {
         $data['bloodGroups'] = BloodGroup::pluck('bg_name', 'id');
         $data['banknames'] = BloodBank::pluck('bank_name', 'id');
         return view($this->__LoadDataToView('frontend.donor.wantdonate'), compact('data'));
     }
 
-    function dodonate(Request $request)
+    public function dodonate(Request $request)
     {
         $request->validate(
             [
@@ -120,7 +117,7 @@ class DonorController extends FrontendBaseController
             } else {
                 DB::rollBack();
             }
-        } catch (\Exception $exception) {
+        } catch (\Exception$exception) {
             DB::rollBack();
             $request->session()->flash('error', 'Error: ' . $exception->getMessage());
             return redirect()->route('frontend.donor.register');
@@ -128,26 +125,26 @@ class DonorController extends FrontendBaseController
         return redirect()->route('frontend.donor.register');
     }
 
-    function bloodbank()
+    public function bloodbank()
     {
         $data['records'] = BloodBank::orderby('created_at', 'desc')->get();
         return view($this->__LoadDataToView('frontend.donor.bloodbank'), compact('data'));
     }
 
-    function bloodAvailable()
+    public function bloodAvailable()
     {
         $data['records'] = BloodPouch::orderby('created_at', 'desc')->get();
         return view($this->__LoadDataToView('frontend.donor.availability'), compact('data'));
     }
 
-    function orderBlood()
+    public function orderBlood()
     {
         $data['bloodGroups'] = BloodGroup::pluck('bg_name', 'id');
         $data['bloodBank'] = BloodBank::pluck('bank_name', 'id');
         return view($this->__LoadDataToView('frontend.donor.order'), compact('data'));
     }
 
-    function addToCart(Request $request)
+    public function addToCart(Request $request)
     {
         $request->validate(
             [
@@ -171,12 +168,12 @@ class DonorController extends FrontendBaseController
         return view($this->__LoadDataToView('frontend.donor.orderlist'));
     }
 
-    function orderList()
+    public function orderList()
     {
         return view($this->__LoadDataToView('frontend.donor.orderlist'));
     }
 
-    function updateOrder(Request $request)
+    public function updateOrder(Request $request)
     {
         $row_ids = $request->input('row_id');
         $qtys = $request->input('qty');
@@ -187,11 +184,11 @@ class DonorController extends FrontendBaseController
         return redirect()->route('frontend.donor.orderlist');
     }
 
-    function checkout()
+    public function checkout()
     {
         return view($this->__LoadDataToView('frontend.donor.checkout'));
     }
-    function doCheckout(Request $request)
+    public function doCheckout(Request $request)
     {
         $request->validate([
 
@@ -232,7 +229,7 @@ class DonorController extends FrontendBaseController
                 if ($request->payment_mode == 'online') {
                     Session::put('order_id', $order->id);
                     $response = $this->gateway->purchase(array(
-                        'amount' => round($to/128),
+                        'amount' => round($to / 128),
                         'currency' => env('PAYPAL_CURRENCY'),
                         'returnUrl' => url('success'),
                         'cancelUrl' => url('error'),
@@ -248,7 +245,7 @@ class DonorController extends FrontendBaseController
             } else {
                 $request->session()->flash('error', ' order failed!!');
             }
-        } catch (\Exception $exception) {
+        } catch (\Exception$exception) {
             $request->session()->flash('error', 'Error: ' . $exception->getMessage());
         }
         return redirect()->route('frontend.donor.checkout');
@@ -258,7 +255,7 @@ class DonorController extends FrontendBaseController
         // Once the transaction has been approved, we need to complete it.
         if ($request->input('paymentId') && $request->input('PayerID')) {
             $transaction = $this->gateway->completePurchase(array(
-                'payer_id'             => $request->input('PayerID'),
+                'payer_id' => $request->input('PayerID'),
                 'transactionReference' => $request->input('paymentId'),
             ));
             $response = $transaction->send();
@@ -296,5 +293,11 @@ class DonorController extends FrontendBaseController
         Session::flash('User cancelled the payment.');
     }
 
-                
+    public function paymentDetail()
+    {
+        $data['records'] = Payment::where('payment_status', 'Approved')->get();
+        // dd($data['records']);
+        return view($this->__LoadDataToView('backend.payment.index'), compact('data'));
+      
+    }
 }

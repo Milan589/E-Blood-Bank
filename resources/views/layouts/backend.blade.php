@@ -193,7 +193,7 @@
                             <li class="nav-item">
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ url('../backend/order') }}" class="nav-link">
+                                        <a href="{{ url('../order') }}" class="nav-link">
                                             <i class="far fa-square nav-icon"></i>
                                             <p>List</p>
                                         </a>

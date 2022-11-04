@@ -43,7 +43,11 @@ Route::post('/order/checkout', [App\Http\Controllers\Frontend\DonorController::c
 //payment
 Route::get('success', [\App\Http\Controllers\Frontend\DonorController::class,'success']);
 Route::get('error', [\App\Http\Controllers\Frontend\DonorController::class,'error']);
-
+Route::get('/payment',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetail'])->name('backend.payment.index');
+Route::get('/order', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('backend.order.index');
+Route::get('/order/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('backend.order.show');
+Route::get('/order/{id}/edit', [\App\Http\Controllers\Backend\OrderController::class, 'edit'])->name('backend.order.edit');
+Route::delete('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'destroy'])->name('backend.order.destroy');
 ################ BloodBankController ############
 
 Route::prefix('backend/bloodbank')->name('backend.bloodbank.')->group(function () {

@@ -22,10 +22,17 @@
                     <div style="margin-top:3%;display:inline-flex">
                         <a href="{{route('frontend.donor.bloodbank')}}" class="btn-event-click-button"><i class="fas fa-tint"></i>
                             Blood</a>&nbsp;&nbsp;&nbsp;
+                        @if (auth()->user() != null && auth()->user()->role->name =='donor')
                         <a href="{{route('frontend.donor.order')}}" class="btn-event-click-button"
                             style="background-color:#cf3d3c;color:#fff;padding:12px;border-radius:25px;font-weight:600;"><i
                                 class="far fa-clock"></i>
                             &nbsp;&nbsp;Request Blood &nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;
+                            @else
+                            <a href="{{route('frontend.donor.login')}}" class="btn-event-click-button"
+                            style="background-color:#cf3d3c;color:#fff;padding:12px;border-radius:25px;font-weight:600;"><i
+                                class="far fa-clock"></i>
+                            &nbsp;&nbsp;Login to Request Blood &nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;
+                            @endif
                     </div>
                     <div class="signup">
                         <a href="{{route('frontend.donor.register')}}" class="btn-event-click-button">
@@ -57,10 +64,17 @@
                     <div style="margin-top:3%;display:inline-flex">
                         <a href="{{route('frontend.donor.bloodbank')}}" class="btn-event-click-button"><i class="fas fa-tint"></i>
                             Blood</a>&nbsp;&nbsp;&nbsp;
-                        <a href="#" class="btn-event-click-button"
+                            @if (auth()->user() != null && auth()->user()->role->name =='donor')
+                        <a href="{{route('frontend.donor.order')}}" class="btn-event-click-button"
                             style="background-color:#cf3d3c;color:#fff;padding:12px;border-radius:25px;font-weight:600;"><i
                                 class="far fa-clock"></i>
-                            &nbsp;&nbsp;Time&nbsp;&nbsp;</a>
+                            &nbsp;&nbsp;Blood Request&nbsp;&nbsp;</a>
+                            @else
+                            <a href="{{route('frontend.donor.order')}}" class="btn-event-click-button"
+                            style="background-color:#cf3d3c;color:#fff;padding:12px;border-radius:25px;font-weight:600;"><i
+                                class="far fa-clock"></i>
+                            &nbsp;&nbsp;Login to Request Blood&nbsp;&nbsp;</a>
+                            @endif
                     </div>
                     <div class="signup">
                         <a href="{{route('frontend.donor.register')}}" class="btn-signup">
@@ -89,7 +103,7 @@
                 </div>
                 @if (auth()->user() != null && auth()->user()->role->name =='donor')
                 <div class="blood2">
-                    <a href="#" class="btn-signup">
+                    <a href="{{route('frontend.donor.wantdonate')}}" class="btn-signup">
                         <h4 class="topic">Blood Donation</h4>
                     </a>
                 </div>

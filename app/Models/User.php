@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Backend\BloodDonation;
 use App\Models\Backend\BloodGroup;
+use App\Models\Backend\Order;
 use App\Models\Backend\Role;
 use Faker\Core\Blood;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,5 +71,9 @@ class User extends Authenticatable
     
     function donor(){
         return $this->hasOne(Donor::class,'user_id','id');
+    }
+
+    function users(){
+        return $this->hasMany(Order::class,'user_id','id');
     }
 }
