@@ -21,9 +21,13 @@ class OrderController extends BackendBaseController
         $data['records'] =Order::where('order_status','Placed')->get();
         return view($this->__loadDataToView('backend.order.index'), compact('data'));
     }
+    public function success()
+    {
+        $data['records'] =Order::where('order_status','success')->get();
+        return view($this->__loadDataToView('backend.order.success'), compact('data'));
+    }
     public function edit($id)
     {
-        $data['roles'] = $this->model->pluck('name', 'id');
         $data['record'] = $this->model->find($id);
         if ($data['record']) {
             return view($this->__loadDataToView($this->base_view . 'edit'), compact('data'));
@@ -32,7 +36,26 @@ class OrderController extends BackendBaseController
             return redirect()->route($this->base_route . 'index');
         }
     }
-
+    public function update(Request $request, $id)
+    {
+        $data['record'] = $this->model->find($id);
+        if (!$data['record']) {
+            request()->session()->flash('error', 'Error: Invalid Request');
+            return redirect()->route($this->base_route . 'index');
+        }
+        try {
+            $request->request->add(['updated_by' => auth()->user()->id]);
+            $record = $data['record']->update($request->all());
+            if ($record) {
+                $request->session()->flash('success', $this->module . ' update success');
+            } else {
+                $request->session()->flash('error', $this->module . ' update failed');
+            }
+        } catch (\Exception $exception) {
+            $request->session()->flash('error', 'Error: ' . $exception->getMessage());
+        }
+        return redirect()->route($this->base_route . 'index');
+    }
     public function destroy(Request  $requestt, $id)
     {
         $data['record'] =  $this->model->find($id);

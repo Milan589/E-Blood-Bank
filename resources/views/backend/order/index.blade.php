@@ -20,6 +20,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
+                <a href="{{ route('backend.order.success') }}" class="btn btn-success">Complete {{ $module }}</a>
                 <div class="card card-primary card-outline">
                     <div class="card-body">
                         <h5 class="card-title">Order Pending List</h5>
@@ -55,9 +56,22 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a
-                                                href="{{ route('backend.order.edit', $record->id) }}"class="btn btn-success">Confirm</a>
+                                           
+                        {!! Form::model($record, [
+                            'route' => [$base_route . 'update', $record->id],
+                            'method' => 'put',
+                            'files' => true,
+                        ]) !!}
+                        <div class="form-group">
+                            {!! Form::hidden('order_status', 'success', ['class' => 'form-control']) !!}
+                            @include('backend.common.validation_field', ['field' => 'address'])
 
+                        </div>
+                        <div class="form-group">
+                            {!! Form::submit('Confirm ', ['class' => 'btn btn-success', 'style' => 'display: inline-block']) !!}
+                            
+                        </div>
+                        {!! Form::close() !!}
                                             <form action="{{ route($base_route . 'destroy', $record->id) }}" method="post"
                                                 style="display: inline-block">
                                                 <input type="hidden" name="_method" value="DELETE">

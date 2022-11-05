@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title', $module . ' List')
+@section('title', 'Payment')
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 @endsection
@@ -10,58 +10,46 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">{{ $module }}</li>
+                        <li class="breadcrumb-item active">Payment</li>
                     </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
 
-    <!-- Main content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <a href="{{ route('backend.bloodpouch.create') }}" class="btn btn-info">Create {{ $module }}</a>
-                <a href="{{ route('backend.bloodpouch.trash') }}" class="btn btn-danger">Trash {{ $module }}</a>
+                <a href="{{ route('backend.payment.index') }}" class="btn btn-success">Online Payment</a>
                 <div class="card card-primary card-outline">
                     <div class="card-body">
-                        <h5 class="card-title">List {{ $module }}</h5>
+                        <h5 class="card-title">List Payment</h5>
                         <br>
                         @include('backend.common.flash_message')
                         <table class="table-bordered table" id="ecommerce1">
                             <thead>
                                 <tr>
                                     <th>SN</th>
-                                    {{-- <th>Donor Name</th> --}}
-                                    <th>Blood Group</th>
-                                    <th>Is Available</th>
-                                    <th>Action</th>
+                                    <th>Customer Name</th>
+                                    <th>Order Date</th>
+                                    <th>Email</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             @foreach ($data['records'] as $record)
                                 <tbody>
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        {{-- <td>{{ $record->bloodDonor->donorName->name}}</td> --}}
-                                        <td> {{$record->bloodGroup->bg_name}}</td>
                                         <td>
-                                            @if ($record->status == 1)
-                                                <span class="text-success">Yes</span>
-                                            @else
-                                                <span class="text-danger">No</span>
-                                            @endif
+                                            {{ $record->order->name}}
                                         </td>
-                                        <td>
-                                            <a href="{{ route($base_route . 'show', $record->id) }}"
-                                                class="btn btn-info">View Details</a>
-                                            <a
-                                                href="{{ route($base_route . 'edit', $record->id) }}"class="btn btn-warning">Edit</a>
-                                            <form action="{{ route($base_route . 'destroy', $record->id) }}" method="post"
-                                                style="display: inline-block">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                        <td>{{ date('d-m-Y', strtotime($record->order_date)) }}</td>
+                                        <td>{{ $record->email }}</td>
+                                        <td>Rs. {{ $record->total}}</td>
+                                        <td class="text-success">
+                                            {{ $record->order_status }}
                                         </td>
                                     </tr>
                             @endforeach

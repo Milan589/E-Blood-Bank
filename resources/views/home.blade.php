@@ -102,13 +102,15 @@
     <!-- Sales Chart Start -->
     <div class="container-fluid pt-4 px-4">
         <div class="row ">
-            <div class="col-sm-12 col-xl-12">
+            <div class="col-sm-4 col-xl-3">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Total User</h6>
-
+                        <h6 class="mb-0">Total Order</h6>
+                        <p class="mb-0 text-primary">{{$orders}}</p>
+                        <div class="ms-3">
+                            <p class="mb-2 text-primary"> <a href="{{url('/order')}}">View Orders</a> </p>
+                        </div>
                     </div>
-                    <canvas id="total-user"></canvas>
                 </div>
             </div>
         </div>

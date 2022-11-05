@@ -25,13 +25,22 @@
                         <h5 class="card-title">Order List</h5>
                         <br>
                         @include('backend.common.flash_message')
-                       
-                        {!! Form::model($data['record'], ['route' => [$base_route . 'update', $data['record']->id], 'method' => 'put', 'files' => true]) !!}
+
+                        {!! Form::model($data['record'], [
+                            'route' => [$base_route . 'update', $data['record']->id],
+                            'method' => 'put',
+                            'files' => true,
+                        ]) !!}
                         <div class="form-group">
-                            {!! Form::label('address', 'Address') !!}
-                            {!! Form::text('address', null, ['class' => 'form-control']) !!}
+                            {!! Form::text('order_status', 'success', ['class' => 'form-control']) !!}
                             @include('backend.common.validation_field', ['field' => 'address'])
+
                         </div>
+                        <div class="form-group">
+                            {!! Form::submit('Save ' . $module, ['class' => 'btn btn-info']) !!}
+                            {!! Form::reset('Clear', ['class' => 'btn btn-danger']) !!}
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div><!-- /.card -->
             </div>

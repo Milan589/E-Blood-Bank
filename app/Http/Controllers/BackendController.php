@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Backend\BloodDonation;
+use App\Models\Backend\Order;
 use App\Models\Donor;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -76,6 +77,9 @@ class BackendController extends Controller
             ->get();
         $totalOmins = $bloodGroupOmins->sum('amount');
 
-        return view('home', compact('totalApos', 'totalAmins', 'totalBpos', 'totalBmins', 'totalABpos', 'totalABmins', 'totalOpos', 'totalOmins',));
+        $orders = Order::where('order_status','Placed')->count();
+        return view('home', compact('totalApos', 'totalAmins', 'totalBpos', 'totalBmins', 'totalABpos', 'totalABmins', 'totalOpos', 'totalOmins', 'orders'));
+
+
     }
 }

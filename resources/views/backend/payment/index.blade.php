@@ -20,7 +20,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                {{-- <a href="{{ route('backend.order.trash') }}" class="btn btn-danger">Trash {{ $module }}</a> --}}
+                <a href="{{ route('backend.payment.cod') }}" class="btn btn-success">Cash Payment</a>
                 <div class="card card-primary card-outline">
                     <div class="card-body">
                         <h5 class="card-title">List Payment</h5>

@@ -5,9 +5,16 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('bd_id', 'Blood Donor'); !!}
-    {!! Form::select('bd_id',$data['bloodDonations'], null,['class' => 'form-control','placeholder'=>'Select Donation ID']); !!}
-    @include('backend.common.validation_field',['field' => 'bd_id'])
+    {{-- <div class="form-group">
+        <label for="">Blood Donor</label>
+        <select name="user_id" id="">
+            <option value="">Select Donor Name</option>
+        <option value="{{$data['bloodDonations']}}">{{$data['bloodDonations']->bloodDonor->donorName->name}}</option>
+        </select>
+    </div> --}}
+    {!! Form::label('id', 'Blood Donor'); !!}
+    {!! Form::select('id',$data['bloodDonations'], null,['class' => 'form-control','placeholder'=>'Select Donation ID']); !!}
+    @include('backend.common.validation_field',['field' => 'id'])
 </div>
 <div class="form-group">
     {!! Form::label('bg_id', 'Blood Group'); !!}

@@ -108,7 +108,6 @@ class DonorController extends FrontendBaseController
         );
         try {
             $request->request->add(['user_id' => Auth::user()->id]);
-            //    dd($request);
             $donor = BloodDonation::create($request->all());
             if ($donor) {
                 DB::commit();
@@ -223,7 +222,7 @@ class DonorController extends FrontendBaseController
 
                     OrderBloodPouchDetail::create($order_detail_data);
                     $to = $to + ($cart_item->qty * $cart_item->price);
-                    // Cart::remove($rowid);
+                    Cart::remove($rowid);
                     $request->session()->flash('success', ' Order  successfully!!');
                 }
                 if ($request->payment_mode == 'online') {
@@ -298,6 +297,12 @@ class DonorController extends FrontendBaseController
         $data['records'] = Payment::where('payment_status', 'Approved')->get();
         // dd($data['records']);
         return view($this->__LoadDataToView('backend.payment.index'), compact('data'));
-      
+
+    }
+    public function paymentDetailForCod()
+    {
+        $data['records'] = Order::where('payment_mode', 'cod')->where('order_status','success')->get();
+        return view($this->__LoadDataToView('backend.payment.cod'), compact('data'));
+
     }
 }

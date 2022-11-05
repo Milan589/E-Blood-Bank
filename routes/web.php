@@ -44,10 +44,13 @@ Route::post('/order/checkout', [App\Http\Controllers\Frontend\DonorController::c
 Route::get('success', [\App\Http\Controllers\Frontend\DonorController::class,'success']);
 Route::get('error', [\App\Http\Controllers\Frontend\DonorController::class,'error']);
 Route::get('/payment',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetail'])->name('backend.payment.index');
+Route::get('/payment/cod',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetailForCod'])->name('backend.payment.cod');
 Route::get('/order', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('backend.order.index');
+Route::get('/order/success', [\App\Http\Controllers\Backend\OrderController::class, 'success'])->name('backend.order.success');
 Route::get('/order/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('backend.order.show');
 Route::get('/order/{id}/edit', [\App\Http\Controllers\Backend\OrderController::class, 'edit'])->name('backend.order.edit');
 Route::delete('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'destroy'])->name('backend.order.destroy');
+Route::put('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'update'])->name('backend.order.update');
 ################ BloodBankController ############
 
 Route::prefix('backend/bloodbank')->name('backend.bloodbank.')->group(function () {
