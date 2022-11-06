@@ -43,17 +43,21 @@ Route::post('/order/checkout', [App\Http\Controllers\Frontend\DonorController::c
 //payment
 Route::get('success', [\App\Http\Controllers\Frontend\DonorController::class,'success']);
 Route::get('error', [\App\Http\Controllers\Frontend\DonorController::class,'error']);
-Route::get('/payment',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetail'])->name('backend.payment.index');
-Route::get('/payment/cod',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetailForCod'])->name('backend.payment.cod');
-Route::get('/order', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('backend.order.index');
-Route::get('/order/success', [\App\Http\Controllers\Backend\OrderController::class, 'success'])->name('backend.order.success');
-Route::get('/order/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('backend.order.show');
-Route::get('/order/{id}/edit', [\App\Http\Controllers\Backend\OrderController::class, 'edit'])->name('backend.order.edit');
-Route::delete('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'destroy'])->name('backend.order.destroy');
-Route::put('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'update'])->name('backend.order.update');
+
+Route::prefix('')->name('backend.')->middleware(['auth', 'check_admin_role'])->group(function () {
+    //to show deleted data
+Route::get('/payment',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetail'])->name('payment.index');
+Route::get('/payment/cod',[\App\Http\Controllers\Frontend\DonorController::class,'paymentDetailForCod'])->name('payment.cod');
+Route::get('/order', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('order.index');
+Route::get('/order/success', [\App\Http\Controllers\Backend\OrderController::class, 'success'])->name('order.success');
+Route::get('/order/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('order.show');
+Route::get('/order/{id}/edit', [\App\Http\Controllers\Backend\OrderController::class, 'edit'])->name('order.edit');
+Route::delete('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'destroy'])->name('order.destroy');
+Route::put('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'update'])->name('order.update');
+});
 ################ BloodBankController ############
 
-Route::prefix('backend/bloodbank')->name('backend.bloodbank.')->group(function () {
+Route::prefix('backend/bloodbank')->name('backend.bloodbank.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\BloodBankController::class, 'trash'])->name('trash');
@@ -82,7 +86,7 @@ Route::prefix('backend/bloodbank')->name('backend.bloodbank.')->group(function (
 
 ################ LocationController ############
 
-Route::prefix('backend/location')->name('backend.location.')->group(function () {
+Route::prefix('backend/location')->name('backend.location.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\LocationController::class, 'trash'])->name('trash');
@@ -110,7 +114,7 @@ Route::prefix('backend/location')->name('backend.location.')->group(function () 
 
 ################ BankTypeController ############
 
-Route::prefix('backend/banktype')->name('backend.banktype.')->group(function () {
+Route::prefix('backend/banktype')->name('backend.banktype.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\BankTypeController::class, 'trash'])->name('trash');
@@ -138,7 +142,7 @@ Route::prefix('backend/banktype')->name('backend.banktype.')->group(function () 
 
 ################ BloodGroupController ############
 
-Route::prefix('backend/bloodgroup')->name('backend.bloodgroup.')->group(function () {
+Route::prefix('backend/bloodgroup')->name('backend.bloodgroup.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\BloodGroupController::class, 'trash'])->name('trash');
@@ -166,7 +170,7 @@ Route::prefix('backend/bloodgroup')->name('backend.bloodgroup.')->group(function
 
 ################ BloodDonationController ############
 
-Route::prefix('backend/blooddonation')->name('backend.blooddonation.')->group(function () {
+Route::prefix('backend/blooddonation')->name('backend.blooddonation.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\BloodDonationController::class, 'trash'])->name('trash');
@@ -194,7 +198,7 @@ Route::prefix('backend/blooddonation')->name('backend.blooddonation.')->group(fu
 
 ################ BloodpouchController ############
 
-Route::prefix('backend/bloodpouch')->name('backend.bloodpouch.')->group(function () {
+Route::prefix('backend/bloodpouch')->name('backend.bloodpouch.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\BloodPouchController::class, 'trash'])->name('trash');
@@ -221,7 +225,7 @@ Route::prefix('backend/bloodpouch')->name('backend.bloodpouch.')->group(function
 });
 ################ UserController ############
 
-Route::prefix('backend/user')->name('backend.user.')->group(function () {
+Route::prefix('backend/user')->name('backend.user.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\UserController::class, 'trash'])->name('trash');
@@ -251,7 +255,7 @@ Route::prefix('backend/user')->name('backend.user.')->group(function () {
 
 ################ RoleController ############
 
-Route::prefix('backend/role')->name('backend.role.')->group(function () {
+Route::prefix('backend/role')->name('backend.role.')->middleware(['auth', 'check_admin_role'])->group(function () {
     //to show deleted data
     //it should be given priority show kept on top
     Route::get('/trash', [\App\Http\Controllers\Backend\RoleController::class, 'trash'])->name('trash');
