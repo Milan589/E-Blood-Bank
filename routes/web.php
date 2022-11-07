@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
+Route::group(['middleware' => 'prevent_back'],function(){
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('frontend.home');
@@ -279,4 +279,5 @@ Route::prefix('backend/role')->name('backend.role.')->middleware(['auth', 'check
     Route::get('/{id}/edit', [\App\Http\Controllers\Backend\RoleController::class, 'edit'])->name('edit');
     // to update data of database
     Route::put('/{id}', [\App\Http\Controllers\Backend\RoleController::class, 'update'])->name('update');
+});
 });

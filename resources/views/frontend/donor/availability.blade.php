@@ -24,7 +24,7 @@
                 style='width:100% ; color:#dc3545 ;'>
                 <thead class=" " style="background-color: #faebd7; color:#dc3545;">
                     <th class="all">S.No.</th>
-                    <th class="all">Blood Bank</th>
+                    {{-- <th class="all">Blood Bank</th> --}}
                     <th class="all">Blood Group</th>
                     <th class="desktop">Availability</th>
                     <th class="desktop">Last Updated</th>
@@ -32,7 +32,7 @@
                     @foreach ($data['records'] as $record )
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
-                            <td>{{ $record->bloodDonor->bankName->bank_name}}</td>
+                            {{-- <td>{{ $record->bloodDonor->bankName->bank_name}}</td> --}}
                            <td>{{ $record->bloodGroup->bg_name}}</td>
                             <td>
                                 @if ($record->status == 1)
